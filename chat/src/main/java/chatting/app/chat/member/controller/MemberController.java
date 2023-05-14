@@ -10,10 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -57,10 +54,24 @@ public class MemberController {
         Member member = memberService.loginCheck(form);
 
         if(member==null)
+            return "member/login-fail";
 
         if(br.hasErrors())
             return "member/login";
 
+        session.setAttribute("memberId",member.getId());
+
         return "member/login-success";
+    }
+
+    @GetMapping("addFriend")
+    public String addFriend(){
+        return "member/addFriend";
+    }
+
+    @PostMapping("addFriend")
+    public String addFriend(@RequestParam String userId){
+        Member member = memberService.friendSearch(userId);
+        return "member/friend-info";
     }
 }

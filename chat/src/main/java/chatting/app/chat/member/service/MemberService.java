@@ -40,4 +40,8 @@ public class MemberService {
     public Member loginCheck(MemberLoginForm form) {
         return memberRepository.login(form);
     }
+
+    public Member friendSearch(String userId) {
+        return memberRepository.findByUserId(userId);
+    }
 }

@@ -2,9 +2,13 @@
 <html th:replace="~{layout :: layout(~{::title}, ~{::section})}">
 <head>
     <meta charset="UTF-8">
-    <title>홈페이지</title>
+    <title>Chat Application</title>
 </head>
 <body>
-<section></section>
+<section>
+    <div class="container" th:if="${session.memberId!=null}">
+        <h3 class="text-primary">친구목록</h3>
+    </div>
+</section>
 </body>
 </html>

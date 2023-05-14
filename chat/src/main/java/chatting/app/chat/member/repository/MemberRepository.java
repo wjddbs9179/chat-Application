@@ -38,9 +38,15 @@ public class MemberRepository {
     }
 
     public Member login(MemberLoginForm form) {
-        return em.createQuery("select m from Member m where userId=:userid and password = :password",Member.class)
+        return em.createQuery("select m from Member m where userId=:userId and password = :password",Member.class)
                 .setParameter("userId",form.getUserId())
                 .setParameter("password",form.getPassword())
+                .getResultList().stream().findAny().orElse(null);
+    }
+
+    public Member findByUserId(String userId) {
+        return em.createQuery("select m from Member m where userId = :userId",Member.class)
+                .setParameter("userId",userId)
                 .getResultList().stream().findAny().orElse(null);
     }
 }
