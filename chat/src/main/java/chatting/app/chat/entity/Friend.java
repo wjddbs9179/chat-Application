@@ -1,8 +1,10 @@
 package chatting.app.chat.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class Friend {
     @Id @GeneratedValue
     private Long id;

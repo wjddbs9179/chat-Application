@@ -15,11 +15,8 @@
     <title th:replace="${title}">레이아웃 타이틀</title>
 </head>
 <body>
-<header>
-    <div style="width:1400px; text-align:right;" th:if="${session.memberId==null}">
-        <a class="btn btn-success" href="/member/login">로그인</a>
-        <a class="btn btn-success" href="/member/join">회원가입</a>
-    </div>
+<header style="text-align:right; width:1500px;">
+    <a th:if="${session.memberId!=null}" class="btn btn-warning" href="/member/logout">로그아웃</a>
 </header>
 <div style="text-align: center;">
 <a href="/"><img th:src="|/images/로고.png|"></a>

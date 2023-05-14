@@ -6,8 +6,27 @@
 </head>
 <body>
 <section>
+    <div style="text-align:center;" th:if="${session.memberId==null}">
+        <a style="width:100px;" class="btn btn-success" href="/member/login">로그인</a>
+        <a style="width:100px;" class="btn btn-success" href="/member/join">회원가입</a>
+    </div>
     <div class="container" th:if="${session.memberId!=null}">
+        <div style="text-align: right;">
+            <button class="btn btn-info" type="button" th:onclick="|location.href='/member/addFriend'|">친구추가</button>
+        </div>
         <h3 class="text-primary">친구목록</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>프로필사진</th><th>이름</th><th>#</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="friend:${friends}">
+                    <td></td><td th:text="${friend.username}"></td><td></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </section>
 </body>

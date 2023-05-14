@@ -1,6 +1,8 @@
 package chatting.app.chat.member.service;
 
+import chatting.app.chat.entity.Friend;
 import chatting.app.chat.entity.Member;
+import chatting.app.chat.member.repository.FriendRepository;
 import chatting.app.chat.member.repository.MemberRepository;
 import chatting.app.chat.member.service.domain.MemberJoinForm;
 import chatting.app.chat.member.service.domain.MemberLoginForm;
@@ -9,11 +11,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final FriendRepository friendRepository;
 
     public void join(MemberJoinForm form){
 
@@ -43,5 +48,18 @@ public class MemberService {
 
     public Member friendSearch(String userId) {
         return memberRepository.findByUserId(userId);
+    }
+
+    public boolean addFriend(Member member1, Member member2){
+        Friend friend = new Friend(member1,member2);
+        return friendRepository.save(friend);
+    }
+
+    public Member memberInfo(Long id){
+        return memberRepository.findById(id);
+    }
+
+    public List<Member> myFriendList(Long memberId) {
+        return memberRepository.myFriends(memberId);
     }
 }

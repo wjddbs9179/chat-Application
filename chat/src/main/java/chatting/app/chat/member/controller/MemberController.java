@@ -1,6 +1,7 @@
 package chatting.app.chat.member.controller;
 
 import chatting.app.chat.entity.Member;
+import chatting.app.chat.member.controller.domain.MemberFriendInfoForm;
 import chatting.app.chat.member.service.MemberService;
 import chatting.app.chat.member.service.domain.MemberJoinForm;
 import chatting.app.chat.member.service.domain.MemberLoginForm;
@@ -70,8 +71,29 @@ public class MemberController {
     }
 
     @PostMapping("addFriend")
-    public String addFriend(@RequestParam String userId){
+    public String addFriend(@RequestParam String userId,Model model){
         Member member = memberService.friendSearch(userId);
+        if(member==null)
+            return "member/not-found-friend";
+        model.addAttribute("form",new MemberFriendInfoForm(member.getId(),userId,member.getUsername()));
         return "member/friend-info";
+    }
+
+    @GetMapping("addFriendExecution/{id}")
+    public String addFriendExecution(HttpSession session,@PathVariable("id")Long id){
+        Long memberId = (Long) session.getAttribute("memberId");
+        Member member1 = memberService.memberInfo(memberId);
+        Member member2 = memberService.memberInfo(id);
+        if(memberService.addFriend(member1,member2)){
+            return "redirect:/";
+        }else{
+            return "member/already-added-friend";
+        }
+    }
+
+    @GetMapping("logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/";
     }
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html th:replace="~{layout :: layout(~{::title}, ~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>친구 찾기</title>
+</head>
+<body>
+<section>
+  <div class="container">
+    <h3>아이디</h3>
+    <p th:text="${form.userId}"></p>
+    <h3>이름</h3>
+    <p th:text="${form.username}"></p>
+    <hr>
+    <a class="btn btn-success" type="button" th:href="|/member/addFriendExecution/${form.id}|">추가하기</a>
+  </div>
+</section>
+</body>
+</html>
