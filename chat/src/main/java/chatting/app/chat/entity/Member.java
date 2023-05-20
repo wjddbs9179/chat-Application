@@ -25,6 +25,9 @@ public class Member {
     @OneToMany(mappedBy = "member2")
     private List<Friend> friends2 = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member")
+    private List<ChatRoomMember> chatRooms = new ArrayList<>();
+
     public Member() {
     }
 

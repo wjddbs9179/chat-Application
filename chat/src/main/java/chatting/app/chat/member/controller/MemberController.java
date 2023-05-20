@@ -13,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/member/")
@@ -95,5 +97,30 @@ public class MemberController {
     public String logout(HttpSession session){
         session.invalidate();
         return "redirect:/";
+    }
+
+    @GetMapping("friendAcceptList")
+    public String friendAccept(HttpSession session,Model model){
+        Long memberId = (Long) session.getAttribute("memberId");
+        List<Member> friendAcceptList =  memberService.myFriendAcceptList(memberId);
+
+        model.addAttribute("friendAcceptList",friendAcceptList);
+        return "member/friendAcceptList";
+    }
+
+    @GetMapping("accept/{friendId}")
+    public String accept(HttpSession session,@PathVariable("friendId")Long friendId){
+        Long memberId = (Long) session.getAttribute("memberId");
+        memberService.friendAccept(memberId,friendId);
+
+        return "redirect:/member/friendAcceptList";
+    }
+
+    @GetMapping("refuse/{friendId}")
+    public String refuse(HttpSession session,@PathVariable("friendId")Long friendId){
+        Long memberId = (Long) session.getAttribute("memberId");
+        memberService.friendRefuse(memberId,friendId);
+
+        return "redirect:/member/friendAcceptList";
     }
 }

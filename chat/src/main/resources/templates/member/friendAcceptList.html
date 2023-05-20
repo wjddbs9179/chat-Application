@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html th:replace="~{layout :: layout(~{::title}, ~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>친구신청목록</title>
+</head>
+<body>
+<section>
+<div class="container">
+    <h3 class="text-primary">친구목록</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>프로필사진</th><th>이름</th><th>#</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="friend:${friendAcceptList}">
+            <td></td><td th:text="${friend.username}"></td>
+            <td>
+            <a class="btn btn-primary" th:href="|/member/accept/${friend.id}|">수락</a>
+            <a class="btn btn-primary" th:href="|/member/refuse/${friend.id}|">거절</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</section>
+</body>
+</html>

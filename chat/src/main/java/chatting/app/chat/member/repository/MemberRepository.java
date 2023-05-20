@@ -20,6 +20,7 @@ public class MemberRepository {
     public void save(Member member) {
         em.persist(member);
         Friend friend = new Friend(member, member);
+        friend.setAccept(true);
         em.persist(friend);
     }
 
@@ -56,19 +57,5 @@ public class MemberRepository {
                 .getResultList().stream().findAny().orElse(null);
     }
 
-    public List<Member> myFriends(Long memberId) {
-        List<Friend> friends = em.createQuery("select f from Friend f where member1.id=:memberId or member2.id=:memberId", Friend.class)
-                .setParameter("memberId", memberId)
-                .getResultList();
 
-        List<Member> friendsList = new ArrayList<>();
-        for (Friend friend : friends) {
-            if (friend.getMember1().getId().equals(memberId))
-                friendsList.add(friend.getMember2());
-            else
-                friendsList.add(friend.getMember1());
-        }
-
-        return friendsList;
-    }
 }

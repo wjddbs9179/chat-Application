@@ -60,6 +60,18 @@ public class MemberService {
     }
 
     public List<Member> myFriendList(Long memberId) {
-        return memberRepository.myFriends(memberId);
+        return friendRepository.myFriends(memberId);
+    }
+
+    public List<Member> myFriendAcceptList(Long memberId) {
+        return friendRepository.myFriendsAcceptList(memberId);
+    }
+
+    public void friendAccept(Long memberId, Long friendId) {
+        friendRepository.accept(memberId,friendId);
+    }
+
+    public void friendRefuse(Long memberId, Long friendId){
+        friendRepository.refuse(memberId,friendId);
     }
 }

@@ -15,7 +15,13 @@ public class Friend {
     @JoinColumn(name = "member2_id")
     private Member member2;
 
+    private boolean accept;
+
     public Friend() {
+    }
+
+    public void setAccept(boolean accept) {
+        this.accept = accept;
     }
 
     public Friend(Member member1, Member member2) {

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html th:replace="~{layout :: layout(~{::title}, ~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>채팅방 개설하기</title>
+</head>
+<body>
+<section>
+    <div class="container">
+        <h3 class="text-primary">친구목록</h3>
+        <form action="" method="post">
+            <div id="chatRoomMemberBox">
+                <input type="hidden" name="members" th:value="${session.memberId}">
+            </div>
+            <button type="submit" class="btn btn-success">개설</button>
+        </form>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>프로필사진</th>
+                <th>이름</th>
+                <th>#</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${session.memberId!=member.id}" th:id="|member${stats.count}|" th:each="member,stats:${members}">
+                <td></td>
+                <td th:text="${member.username}"></td>
+                <td><button class="btn btn-success" type="button" th:onclick="|chatRoomAddMember(${stats.count});|">추가하기</button></td>
+                <td style="display: none;" th:text="${member.id}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+<script>
+    function chatRoomAddMember(count) {
+        var member = document.getElementById(`member${count}`);
+        member.style.display="none";
+        var button = event.target;
+        var memberName = button.closest('tr').querySelector('td:nth-child(2)').textContent;
+        var memberId = button.closest('tr').querySelector('td:nth-child(4)').textContent;
+        console.log(count);
+
+        var name = document.createElement('span');
+        name.textContent = memberName+" ";
+        var inputId = document.createElement('input');
+        inputId.setAttribute('type','hidden');
+        inputId.setAttribute('name','members');
+        inputId.value = memberId;
+
+        var chatRoomMemberBox = document.getElementById('chatRoomMemberBox');
+        chatRoomMemberBox.appendChild(inputId);
+        chatRoomMemberBox.appendChild(name);
+    }
+</script>
+</section>
+</body>
+</html>

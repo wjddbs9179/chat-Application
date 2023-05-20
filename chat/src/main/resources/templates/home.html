@@ -13,6 +13,8 @@
     <div class="container" th:if="${session.memberId!=null}">
         <div style="text-align: right;">
             <button class="btn btn-info" type="button" th:onclick="|location.href='/member/addFriend'|">친구추가</button>
+            <a class="btn btn-info" th:href="|/member/friendAcceptList|">친구신청목록</a>
+            <a class="btn btn-info" th:href="|/chat/createChatRoom|">채팅방 개설하기</a>
         </div>
         <h3 class="text-primary">친구목록</h3>
         <table class="table">
@@ -23,7 +25,10 @@
             </thead>
             <tbody>
                 <tr th:each="friend:${friends}">
-                    <td></td><td th:text="${friend.username}"></td><td></td>
+                    <td></td><td th:text="${friend.username}"></td>
+                    <td>
+                        <a th:if="${session.memberId!=friend.id}" class="btn btn-success" th:href="|/chat/createChatRoomOneToOne/${friend.id}|">1:1대화</a>
+                    </td>
                 </tr>
             </tbody>
         </table>

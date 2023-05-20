@@ -29,9 +29,10 @@ public class HomeController {
     @GetMapping("/")
     public String home(HttpSession session, Model model){
         Long memberId = (Long)session.getAttribute("memberId");
-        List<Member> friends = memberService.myFriendList(memberId);
-
-        model.addAttribute("friends",friends);
+        if(memberId!=null) {
+            List<Member> friends = memberService.myFriendList(memberId);
+            model.addAttribute("friends", friends);
+        }
         return "home";
     }
 
